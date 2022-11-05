@@ -72,7 +72,7 @@
    users.users.chris = {
      isNormalUser = true;
      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-     initialPassword = "toor";
+     initialPassword = "password";
   #   packages = with pkgs; [
   #     firefox
   #     thunderbird
