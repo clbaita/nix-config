@@ -63,7 +63,16 @@
 
   # Enable sound.
   # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+   hardware.pulseaudio.enable = false;
+    security.rtkit.enable = true;
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+      jack.enable = true;
+    };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -73,6 +82,7 @@
      isNormalUser = true;
      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
      initialPassword = "password";
+     shell = pkgs.zsh;
   #   packages = with pkgs; [
   #     firefox
   #     thunderbird
