@@ -9,6 +9,7 @@
 
   home.packages = with pkgs; [
     neovim
+    neofetch
     nodejs
     nodePackages.typescript
     nodePackages.npm
