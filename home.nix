@@ -13,29 +13,37 @@
     nodejs
     nodePackages.typescript
     nodePackages.npm
+    brave
+    slack
+    discord
   ];
 
-  programs.git = {
-    enable = true;
-    userName  = "clbaita";
-    userEmail = "clbaita@outlook.com";
-  };
-
-  programs.vscode = {
-    enable = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-    history = {
-      size = 10000;
-      path = "${config.xdg.dataHome}/zsh/history";
+  programs = {
+    git = {
+      enable = true;
+      userName  = "clbaita";
+      userEmail = "clbaita@outlook.com";
     };
-    # oh my zsh not found for some reason?
-    #ohMyZsh = {
-    #  enable = true;
-    #  plugins = [ "git" "thefuck" ];
-    #  theme = "robbyrussell";
-    #};
+
+    vscode = {
+      enable = true;
+    };
+
+    zsh = {
+      enable = true;
+      history = {
+        size = 10000;
+        path = "${config.xdg.dataHome}/zsh/history";
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" ];
+        theme = "refined";
+      };
+    };
+
+    alacritty = {
+      enable = true;
+    };
   };
 }

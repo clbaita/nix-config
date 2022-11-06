@@ -110,9 +110,22 @@
   environment.systemPackages = with pkgs; [
      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      wget
-     brave
      htop
    ];
+
+  # System fonts
+  fonts.fonts = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+    nerdfonts
+];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
