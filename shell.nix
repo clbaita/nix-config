@@ -5,8 +5,8 @@
 }) { } }:
 stable.mkShell {
   name = "nix-config";
-  buildInputs = with stable; [
-    nixfmt
-  ];
-  shellHook = "";
+  buildInputs = with stable; [ nixfmt ];
+  shellHook = ''
+    nixfmt $(find . -type f -name "*.nix")
+  '';
 }
