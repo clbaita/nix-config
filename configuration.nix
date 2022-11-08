@@ -2,17 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, lib, ... }:
+{ config, pkgs, flake, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./options.nix
+  ];
 
-  environment.etc."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
-  nix.nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
-  nix.registry = with lib; mapAttrs' (name: value: nameValuePair name {flake = value;}) inputs;
+  inherit flake;
+
+  home-manager.users.chris = import ./home.nix { inherit pkgs config; };
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+
+  environment.etc."nix/inputs/nixpkgs".source = flake.inputs.nixpkgs.outPath;
+  nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -21,7 +26,8 @@
   networking.hostName = "jackfrost"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Australia/Sydney";
@@ -32,31 +38,28 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-   console = {
-     font = "Lat2-Terminus16";
-     keyMap = "us";
-  #   useXkbConfig = true; # use xkbOptions in tty.
-   };
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+    #   useXkbConfig = true; # use xkbOptions in tty.
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
   fileSystems = {
-      "/".options = [ "compress=zstd" ];
-      "/home".options = [ "compress=zstd" ];
-      "/nix".options = [ "compress=zstd" "noatime" ];
-      "/swap".options = [ "noatime" ];
+    "/".options = [ "compress=zstd" ];
+    "/home".options = [ "compress=zstd" ];
+    "/nix".options = [ "compress=zstd" "noatime" ];
+    "/swap".options = [ "noatime" ];
   };
 
-  
-
   # Configure keymap in X11
-   services.xserver.layout = "us";
+  services.xserver.layout = "us";
   # services.xserver.xkbOptions = {
   #   "eurosign:e";
   #   "caps:escape" # map caps to escape.
@@ -67,31 +70,31 @@
 
   # Enable sound.
   # sound.enable = true;
-   hardware.pulseaudio.enable = false;
-    security.rtkit.enable = true;
-    services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-      jack.enable = true;
-    };
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+    jack.enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.chris = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-     initialPassword = "password";
-     shell = pkgs.zsh;
-  #   packages = with pkgs; [
-  #     firefox
-  #     thunderbird
-  #   ];
-   };
+  users.users.chris = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    initialPassword = "password";
+    shell = pkgs.zsh;
+    #   packages = with pkgs; [
+    #     firefox
+    #     thunderbird
+    #   ];
+  };
 
   nixpkgs.config.allowUnfree = true;
 
@@ -112,11 +115,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     htop
-     direnv
-   ];
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    htop
+    direnv
+  ];
 
   # System fonts
   fonts.fonts = with pkgs; [
@@ -134,7 +137,7 @@
 
   services.lorri.enable = true;
 
-  nix = { 
+  nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };

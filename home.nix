@@ -1,32 +1,17 @@
-{ config, pkgs, inputs, lib, ...}:
-with lib; let 
-  registry = builtins.toJSON {
-    flakes =
-      mapAttrsToList (n: v: {
-        exact = true;
-        from = {
-          id = n;
-          type = "indirect";
-        };
-        to = {
-          path = v.outPath;
-          type = "path";
-        };
-      })
-      inputs;
-    version = 2;
-  };
+{ config, pkgs, ... }:
+let
+  ownConfig = username:
+    (config.flake.nixosConfigurations.${config.networking.hostName}.config.home-manager.users.${username});
+  chris = ownConfig "chris";
 in {
-  xdg.configFile."nix/registry.json".text = registry;
-}
+  xdg.configFile."nix/inputs/nixpkgs".source =
+    config.flake.inputs.nixpkgs.outPath;
+  home.sessionVariables.NIX_PATH =
+    "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
 
-{
-  xdg.configFile."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
-  home.sessionVariables = "nixpkgs=${config.xdg.configHome}/nix/inputs/nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
-  
   home.username = "chris";
   home.homeDirectory = "/home/chris";
-  
+
   home.stateVersion = "22.11";
   programs.home-manager.enable = true;
 
@@ -43,23 +28,19 @@ in {
   programs = {
     git = {
       enable = true;
-      userName  = "clbaita";
+      userName = "clbaita";
       userEmail = "clbaita@outlook.com";
     };
 
-    firefox = {
-      enable = true;
-    };
+    firefox = { enable = true; };
 
-    vscode = {
-      enable = true;
-    };
+    vscode = { enable = true; };
 
     zsh = {
       enable = true;
       history = {
         size = 10000;
-        path = "${config.xdg.dataHome}/zsh/history";
+        path = "${chris.xdg.dataHome}/zsh/history";
       };
       oh-my-zsh = {
         enable = true;
@@ -68,8 +49,6 @@ in {
       };
     };
 
-    alacritty = {
-      enable = true;
-    };
+    alacritty = { enable = true; };
   };
 }
