@@ -51,11 +51,6 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # For alacritty cursor bug
-  environment.sessionVariables = rec {
-    LIBGL_ALWAYS_SOFTWARE= "1";
-  };
-
   fileSystems = {
     "/".options = [ "compress=zstd" ];
     "/home".options = [ "compress=zstd" ];
