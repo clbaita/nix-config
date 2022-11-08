@@ -2,13 +2,17 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
+  environment.etc."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
+  nix.nixPath = ["nixpkgs=/etc/nix/inputs/nixpkgs"];
+  nix.registry = with lib; mapAttrs' (name: value: nameValuePair name {flake = value;}) inputs;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -111,6 +115,7 @@
      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      wget
      htop
+     direnv
    ];
 
   # System fonts
@@ -125,7 +130,14 @@
     dina-font
     proggyfonts
     nerdfonts
-];
+  ];
+
+  services.lorri.enable = true;
+
+  nix = { 
+    package = pkgs.nixFlakes;
+    extraOptions = "experimental-features = nix-command flakes";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -158,10 +170,5 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
-  nix = { 
-    package = pkgs.nixFlakes;
-    extraOptions = "experimental-features = nix-command flakes";
-  };
 }
 

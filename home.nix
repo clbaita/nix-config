@@ -1,6 +1,29 @@
-{ config, pkgs, ...}:
+{ config, pkgs, inputs, lib, ...}:
+with lib; let 
+  registry = builtins.toJSON {
+    flakes =
+      mapAttrsToList (n: v: {
+        exact = true;
+        from = {
+          id = n;
+          type = "indirect";
+        };
+        to = {
+          path = v.outPath;
+          type = "path";
+        };
+      })
+      inputs;
+    version = 2;
+  };
+in {
+  xdg.configFile."nix/registry.json".text = registry;
+}
 
 {
+  xdg.configFile."nix/inputs/nixpkgs".source = inputs.nixpkgs.outPath;
+  home.sessionVariables = "nixpkgs=${config.xdg.configHome}/nix/inputs/nixpkgs$\{NIX_PATH:+:$NIX_PATH}";
+  
   home.username = "chris";
   home.homeDirectory = "/home/chris";
   
@@ -13,7 +36,6 @@
     nodejs
     nodePackages.typescript
     nodePackages.npm
-    brave
     slack
     discord
   ];
@@ -23,6 +45,10 @@
       enable = true;
       userName  = "clbaita";
       userEmail = "clbaita@outlook.com";
+    };
+
+    firefox = {
+      enable = true;
     };
 
     vscode = {

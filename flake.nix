@@ -9,7 +9,7 @@
     }; 
   };
   
-  outputs = { self, nixpkgs, home-manager }:
+  outputs = inputs @ { self, nixpkgs, home-manager }:
     let 
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -21,6 +21,9 @@
       nixosConfigurations = {
         jackfrost = lib.nixosSystem {
           inherit system;
+          specialArgs = {
+            inherit inputs;
+          };
           modules = [ 
             ./configuration.nix
             home-manager.nixosModules.home-manager {
@@ -36,6 +39,9 @@
       hmConfig = {
         jackfrost = home-manager.lib.homeManagerConfiguration {
           inherit system pkgs;
+          extraSpecialArgs = {
+            inherit inputs;
+          };
           username = "chris";
           homeDirectory = "/home/chris";
           configuration = {
