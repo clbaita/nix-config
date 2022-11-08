@@ -2,30 +2,33 @@
 let
   userConfig = username:
     (config.flake.nixosConfigurations.${config.networking.hostName}.config.home-manager.users.${username});
-  chris = userConfig "chris";
+  username = "chris";
+  chris = userConfig username;
 in {
   xdg.configFile."nix/inputs/nixpkgs".source =
     config.flake.inputs.nixpkgs.outPath;
   home.sessionVariables.NIX_PATH =
     "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
 
-  home.username = "chris";
-  home.homeDirectory = "/home/chris";
+  home = {
+    inherit username;
+    homeDirectory = "/home/${username}";
+    stateVersion = "22.11";
 
-  home.stateVersion = "22.11";
-  programs.home-manager.enable = true;
-
-  home.packages = with pkgs; [
-    neovim
-    neofetch
-    nodejs
-    nodePackages.typescript
-    nodePackages.npm
-    slack
-    discord
-  ];
+    packages = with pkgs; [
+      neovim
+      neofetch
+      nodejs
+      nodePackages.typescript
+      nodePackages.npm
+      slack
+      discord
+    ];
+  };
 
   programs = {
+    home-manager.enable = true;
+
     git = {
       enable = true;
       userName = "clbaita";
