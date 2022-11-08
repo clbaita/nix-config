@@ -4,49 +4,50 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules =
+    [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  
+
   # Can I make this reproduceable? Need to investigate.
-  boot.initrd.luks.devices."NIXROOT1".device = "/dev/disk/by-uuid/8c0a7c8e-d06b-42ba-8f99-5848e3f87f28";
-  boot.initrd.luks.devices."NIXROOT2".device = "/dev/disk/by-uuid/31bfeb0c-5885-444f-9cb0-730dd9100456";
-  
-  fileSystems."/" =
-    { device = "/dev/mapper/NIXROOT1";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
-  
- fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXBOOT";
-      fsType = "vfat";
-    }; 
-  
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-label/NIXROOT";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
+  boot.initrd.luks.devices."NIXROOT1".device =
+    "/dev/disk/by-uuid/8c0a7c8e-d06b-42ba-8f99-5848e3f87f28";
+  boot.initrd.luks.devices."NIXROOT2".device =
+    "/dev/disk/by-uuid/31bfeb0c-5885-444f-9cb0-730dd9100456";
 
-  fileSystems."/home" =
-    { device =  "/dev/disk/by-label/NIXROOT";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
+  fileSystems."/" = {
+    device = "/dev/mapper/NIXROOT1";
+    fsType = "btrfs";
+    options = [ "subvol=root" ];
+  };
 
-  fileSystems."/swap" =
-    { device =  "/dev/disk/by-label/NIXROOT";
-      fsType = "btrfs";
-      options = [ "subvol=swap" ];
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/NIXBOOT";
+    fsType = "vfat";
+  };
 
- # SWAP NO WORKEY :( 
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-label/NIXROOT";
+    fsType = "btrfs";
+    options = [ "subvol=nix" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-label/NIXROOT";
+    fsType = "btrfs";
+    options = [ "subvol=home" ];
+  };
+
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-label/NIXROOT";
+    fsType = "btrfs";
+    options = [ "subvol=swap" ];
+  };
+
+  # SWAP NO WORKEY :( 
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -57,5 +58,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
