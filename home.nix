@@ -5,10 +5,14 @@ let
   username = "chris";
   chris = userConfig username;
 in {
+
   xdg.configFile."nix/inputs/nixpkgs".source =
     config.flake.inputs.nixpkgs.outPath;
-  home.sessionVariables.NIX_PATH =
-    "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
+
+  home.sessionVariables = {
+    NIX_PATH = "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
+    MOZ_ENABLE_WAYLAND = "1";
+  };
 
   home = {
     inherit username;
@@ -35,7 +39,16 @@ in {
       userEmail = "clbaita@outlook.com";
     };
 
-    firefox = { enable = true; };
+    # TODO: Need to check if gnome has xdg portal by default
+    firefox = { 
+      enable = true;
+       package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+        forceWayland = true;
+        extraPolicies = {
+        ExtensionSettings = {};
+        };
+      };
+    };
 
     vscode = { enable = true; };
 
