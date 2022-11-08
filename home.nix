@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 let
-  ownConfig = username:
+  userConfig = username:
     (config.flake.nixosConfigurations.${config.networking.hostName}.config.home-manager.users.${username});
-  chris = ownConfig "chris";
+  chris = userConfig "chris";
 in {
   xdg.configFile."nix/inputs/nixpkgs".source =
     config.flake.inputs.nixpkgs.outPath;
