@@ -10,7 +10,8 @@ in {
     config.flake.inputs.nixpkgs.outPath;
 
   home.sessionVariables = {
-    NIX_PATH = "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
+    NIX_PATH =
+      "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
     MOZ_ENABLE_WAYLAND = "1";
   };
 
@@ -44,13 +45,11 @@ in {
     };
 
     # TODO: Need to check if gnome has xdg portal by default
-    firefox = { 
+    firefox = {
       enable = true;
-       package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
         forceWayland = true;
-        extraPolicies = {
-        ExtensionSettings = {};
-        };
+        extraPolicies = { ExtensionSettings = { }; };
       };
     };
 
