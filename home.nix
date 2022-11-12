@@ -27,6 +27,10 @@ in {
       nodePackages.npm
       slack
       discord
+      vlc
+      imagemagick
+      ffmpeg
+      youtube-dl
     ];
   };
 
