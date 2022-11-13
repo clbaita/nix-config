@@ -71,6 +71,14 @@ in {
       };
     };
 
-    alacritty = { enable = true; };
+    kitty = {
+      enable = true;
+      theme = "Space Gray Eighties";
+      settings = {
+        wayland_titlebar_color = "background";
+        linux_display_server = "wayland";
+        confirm_os_window_close = 0;
+      };
+    };
   };
 }
