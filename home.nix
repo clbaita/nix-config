@@ -74,6 +74,10 @@ in {
     kitty = {
       enable = true;
       theme = "Space Gray Eighties";
+      font = {
+        package = (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; });
+        name = "Iosevka";
+      };
       settings = {
         wayland_titlebar_color = "background";
         linux_display_server = "wayland";
