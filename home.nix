@@ -73,7 +73,7 @@ in {
 
     kitty = {
       enable = true;
-      theme = "Ayu Mirage";
+      # theme = "Ayu Mirage";
       font = {
         package = (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; });
         name = "Iosevka";
@@ -82,6 +82,30 @@ in {
         wayland_titlebar_color = "background";
         linux_display_server = "wayland";
         confirm_os_window_close = 0;
+        # Manual input of everforest theme here https://github.com/bgrnwd/everforest-kitty
+        # Hopefully this is added to kitty-themes one day
+        background = "#323d43";
+        foreground = "#d8caac";
+        cursor = "#d8caac";
+        selection_foreground = "#d8caac";
+        selection_background = "#505a60";
+        color0 = "#3c474d";
+        color8 = "#868d80";
+        color1 = "#e68183";
+        color9 = "#e68183";
+        color2 = "#a7c080";
+        color10 = "#a7c080";
+        color3 = "#d9bb80";
+        color11 = "#d9bb80";
+        color4 = "#83b6af";
+        color12 = "#83b6af";
+        color5 = "#d39bb6";
+        color13 = "#d39bb6";
+        color6 = "#87c095";
+        color14 = "#87c095";
+        color7 = "#868d80";
+        color15 = "#868d80";
+        #########################################################
       };
     };
   };
