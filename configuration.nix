@@ -48,8 +48,27 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+  };
   services.xserver.desktopManager.gnome.enable = true;
+  # Exclude these from gnome installation
+  environment.gnome.excludePackages = with pkgs; [
+    gnome.gnome-music
+    gnome.gedit
+    gnome.totem
+    gnome.tali
+    gnome.iagno
+    gnome.hitori
+    gnome.atomix
+    gnome.gnome-weather
+    gnome.gnome-contacts
+    gnome.gnome-maps
+    gnome.geary
+    gnome-tour
+    gnome-connections
+  ];
 
   fileSystems = {
     "/".options = [ "compress=zstd" ];
@@ -115,9 +134,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
     htop
+    # GUI Global
+    easyeffects # pipewire manager
+    mailspring # email
+    amberol # audio
+    vlc # video
   ];
 
   # System fonts

@@ -23,15 +23,15 @@ in {
     packages = with pkgs; [
       neovim
       neofetch
+      ripgrep
       nodejs
       nodePackages.typescript
       nodePackages.npm
       slack
       discord
-      vlc
       imagemagick
       ffmpeg
-      youtube-dl
+      yt-dlp
     ];
   };
 
