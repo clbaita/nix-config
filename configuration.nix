@@ -133,16 +133,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    htop
-    # GUI Global
-    easyeffects # pipewire manager
-    mailspring # email
-    amberol # audio
-    vlc # video
-  ];
+  environment.systemPackages = with pkgs; [ vim wget htop ];
 
   # System fonts
   fonts.fonts = with pkgs; [

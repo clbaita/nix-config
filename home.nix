@@ -32,6 +32,11 @@ in {
       imagemagick
       ffmpeg
       yt-dlp
+      easyeffects # pipewire manager
+      mailspring # email
+      amberol # audio
+      vlc # video
+      semgrep
     ];
   };
 
@@ -44,16 +49,8 @@ in {
       userEmail = "clbaita@outlook.com";
     };
 
-    # TODO: Need to check if gnome has xdg portal by default
-    firefox = {
-      enable = true;
-      package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-        forceWayland = true;
-        extraPolicies = { ExtensionSettings = { }; };
-      };
-    };
-
-    vscode = { enable = true; };
+    firefox.enable = true;
+    vscode.enable = true;
 
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
