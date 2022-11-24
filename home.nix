@@ -64,8 +64,12 @@ in {
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];
-        theme = "refined";
       };
+    };
+
+    starship = {
+      enable = true;
+      enableZshIntegration = true;
     };
 
     kitty = {
