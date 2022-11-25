@@ -37,6 +37,7 @@ in {
       amberol # audio
       vlc # video
       semgrep
+      logseq
     ];
   };
 
