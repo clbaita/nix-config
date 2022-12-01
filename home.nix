@@ -27,6 +27,7 @@ in {
       nodejs
       nodePackages.typescript
       nodePackages.npm
+      elixir # Needs to be global for vs code :(
       slack
       discord
       imagemagick
