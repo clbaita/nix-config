@@ -34,7 +34,6 @@ in {
       ffmpeg
       yt-dlp
       easyeffects # pipewire manager
-      mailspring # email
       amberol # audio
       vlc # video
       semgrep

@@ -65,7 +65,6 @@
     gnome.gnome-weather
     gnome.gnome-contacts
     gnome.gnome-maps
-    gnome.geary
     gnome-tour
     gnome-connections
   ];
