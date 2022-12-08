@@ -76,7 +76,7 @@ in {
 
     kitty = {
       enable = true;
-      theme = "Ayu Mirage";
+      theme = "Solarized Dark;
       font = {
         package = (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; });
         name = "Iosevka";
