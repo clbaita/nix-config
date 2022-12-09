@@ -24,7 +24,6 @@ in {
     packages = with pkgs; [
       neovim
       neofetch
-      ripgrep
       nodejs
       nodePackages.typescript
       nodePackages.npm
