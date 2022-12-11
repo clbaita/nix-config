@@ -47,6 +47,8 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  environment.sessionVariables = { GTK_THEME = "Adwaita-dark"; };
+
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm = {
     enable = true;

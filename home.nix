@@ -13,7 +13,6 @@ in {
     NIX_PATH =
       "nixpkgs=${chris.xdg.configHome}/nix/inputs/nixpkgs\${NIX_PATH:+:$NIX_PATH}";
     MOZ_ENABLE_WAYLAND = "1";
-    GTK_THEME = "Adwaita-dark";
   };
 
   home = {
