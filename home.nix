@@ -26,7 +26,6 @@ in {
       nodejs
       nodePackages.typescript
       nodePackages.npm
-      elixir_1_14 # Needs to be global for vs code :(
       slack
       discord
       imagemagick
@@ -74,7 +73,7 @@ in {
 
     kitty = {
       enable = true;
-      theme = "Galaxy";
+      theme = "Ayu Mirage";
       font = {
         package = (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; });
         name = "Iosevka";
