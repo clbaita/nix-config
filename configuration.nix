@@ -19,6 +19,9 @@
   environment.etc."nix/inputs/nixpkgs".source = flake.inputs.nixpkgs.outPath;
   nix.nixPath = [ "nixpkgs=/etc/nix/inputs/nixpkgs" ];
 
+  # Kernel version
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
