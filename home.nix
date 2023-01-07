@@ -36,6 +36,7 @@ in {
       vlc # video
       semgrep
       logseq
+      element-desktop
     ];
   };
 
