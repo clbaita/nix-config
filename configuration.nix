@@ -110,7 +110,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.chris = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
     initialPassword = "password";
     shell = pkgs.zsh;
     #   packages = with pkgs; [
@@ -137,7 +137,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ vim wget htop ];
+  environment.systemPackages = with pkgs; [ vim wget htop virt-manager ];
 
   # System fonts
   fonts.fonts = with pkgs; [
@@ -158,6 +158,9 @@
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
+
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
