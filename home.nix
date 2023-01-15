@@ -37,6 +37,7 @@ in {
       semgrep
       logseq
       element-desktop
+      signal-desktop
     ];
   };
 
