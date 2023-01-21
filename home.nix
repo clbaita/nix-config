@@ -38,7 +38,6 @@ in {
       logseq
       element-desktop
       signal-desktop
-      albert
     ];
   };
 
