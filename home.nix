@@ -38,6 +38,7 @@ in {
       logseq
       element-desktop
       signal-desktop
+      albert
     ];
   };
 
@@ -77,8 +78,8 @@ in {
       enable = true;
       theme = "Space Gray Eighties";
       font = {
-        package = (pkgs.nerdfonts.override { fonts = [ "Iosevka" ]; });
-        name = "Iosevka";
+        package = pkgs.hack-font;
+        name = "Hack";
       };
       settings = {
         wayland_titlebar_color = "background";
