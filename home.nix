@@ -75,7 +75,8 @@ in {
 
     kitty = {
       enable = true;
-      theme = "Space Gray Eighties";
+      # Want to use Mayukai Dark theme here
+      theme = "Ayu";
       font = {
         package = pkgs.hack-font;
         name = "Hack";
