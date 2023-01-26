@@ -110,7 +110,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.chris = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" "docker" ]; # Enable ‘sudo’ for the user.
     initialPassword = "password";
     shell = pkgs.zsh;
     #   packages = with pkgs; [
@@ -159,7 +159,13 @@
     extraOptions = "experimental-features = nix-command flakes";
   };
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation = {
+    libvirtd.enable = true;
+    docker = {
+      enable = true;
+      storageDriver = "btrfs"
+    }
+  }
   programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
