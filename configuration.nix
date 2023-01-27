@@ -166,7 +166,7 @@
       storageDriver = "btrfs";
     };
   };
-  
+
   programs.dconf.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
